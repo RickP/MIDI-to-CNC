@@ -30,7 +30,7 @@ Machine settings:
   -machine {cupcake,custom,shapercube,thingomatic,ultimaker}, --machine {cupcake,custom,shapercube,thingomatic,ultimaker}
                         sets everything up appropriately for predefined
                         machines, or flags use of custom settings. (default:
-                        cupcake)
+                        custom)
 
 Customised settings:
   -units {imperial,metric}, --units {imperial,metric}
