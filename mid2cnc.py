@@ -81,10 +81,10 @@ machines_dict = dict( {
 
         'custom':[
             'metric',
-            10.0, 10.0, 10.0,
+            38.0, 38.0, 76.0,
             0.000, 0.000, 0.000,
-            10.000, 10.000, 10.000,
-            'X'
+            200.000, 200.000, 30.000,
+            'XYZ'
         ]
     })
 
@@ -191,7 +191,7 @@ machines = parser.add_argument_group('Machine settings')
 
 machines.add_argument(
     '-machine', '--machine',
-    default = 'cupcake',
+    default = 'custom',
     choices = sorted(machines_dict),
     help    = 'sets everything up appropriately for predefined machines, or flags use of custom settings.'
 )
@@ -436,8 +436,7 @@ def main(argv):
         print "\nWARNING: Gcode metric/imperial setting undefined!\n"
 
     args.outfile.write ("G90 (Absolute posiitioning)\n")
-    args.outfile.write ("G92 X0 Y0 Z0 (set origin to current position)\n")
-    args.outfile.write ("G0 X0 Y0 Z0 F2000.0 (Pointless move to origin to reset feed rate to a sane value)\n")
+    args.outfile.write ("G0 X0 Y0 Z0 F6000.0 (Pointless move to origin to reset feed rate to a sane value)\n")
 
     # Handle the prefix Gcode, if present
     if args.prefix != None:
@@ -557,6 +556,10 @@ def main(argv):
         # Read file and dump to outfile
         for line in args.postfix:
             args.outfile.write (line) 
+
+    # Stop for EMC2
+    args.outfile.write ("G0 X0 Y0 Z0 F6000.0\n")
+    args.outfile.write ("M2\n")
     
 if __name__ == "__main__":
     main(sys.argv)
